@@ -1,9 +1,31 @@
 # Dlugowieczny24.pl
 
-Prosty statyczny projekt (HTML/CSS), gotowy do hostingu na Vercel, Netlify, Cloudflare Pages lub zwykłym nginx.
+Statyczna strona afiliacyjna (mobile-first), bez koszyka i bez checkoutu.
 
-## Lokalnie
-Otwórz `index.html` lub uruchom dowolny prosty serwer statyczny.
+## Mapa strony
+- `/` — strona główna (lej sprzedażowy)
+- `/sen` — landing Sen
+- `/energia` — landing Energia
+- `/fundamenty` — landing Fundamenty
+- `/faq` — FAQ
+- `/kontakt` — Kontakt
+- `/polityka-prywatnosci` — Polityka prywatności
 
-## Migracja
-Brak zależności od frameworków i vendor-lock.
+## Struktura CTA
+- Główne CTA: „Zobacz rekomendacje”
+- Drugie CTA: „Zrób szybki quiz”
+- Na kartach: „Przejdź do sklepu partnera”
+
+## Miejsca na linki afiliacyjne
+Wszystkie miejsca są oznaczone w HTML atrybutami `data-aff` i tymczasowym `href="#"`.
+Podmień `href` na finalne linki partnerów.
+
+## Struktura oferty
+- Budżet
+- Najlepszy wybór (wyróżnione)
+- Premium (jako upgrade)
+
+## Technicznie
+- Czysty HTML/CSS/JS
+- Brak zależności od frameworków
+- Gotowe pod Vercel, ale łatwe do migracji na dowolny hosting statyczny

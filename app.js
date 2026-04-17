@@ -1,0 +1,3 @@
+document.querySelectorAll('[data-quiz-target]').forEach((btn)=>{btn.addEventListener('click',()=>{const target=btn.getAttribute('data-quiz-target');if(target) window.location.href=target+'#najlepszy-wybor';});});
+
+document.querySelectorAll('[data-mail-form]').forEach((form)=>{form.addEventListener('submit',(e)=>{e.preventDefault();const msg=form.querySelector('[data-mail-msg]');if(msg){msg.textContent='Dzięki. Zapis techniczny podłączymy po dodaniu narzędzia mailingowego.';}});});
