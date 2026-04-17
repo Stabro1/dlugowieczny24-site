@@ -7,6 +7,12 @@
   <meta name="description" content="Rozsądny filtr zakupowy: sen, energia, fundamenty. Budżet / najlepszy wybór / premium. Linki afiliacyjne do sklepów partnerów."/>
   <link rel="canonical" href="https://dlugowieczny24.pl/"/>
   <link rel="stylesheet" href="./styles.css"/>
+  <script>
+   (function(w,d,e,u,f,l,n){w[f]=w[f]||function(){(w[f].q=w[f].q||[]).push(arguments);},l=d.createElement(e),l.async=1,l.src=u,
+   n=d.getElementsByTagName(e)[0],n.parentNode.insertBefore(l,n);})
+   (window,document,'script','https://assets.mailerlite.com/js/universal.js','ml');
+   ml('account', '2202928');
+  </script>
 </head>
 <body>
 <header class="topbar"><div class="container"><a class="logo" href="/">Dlugowieczny24.pl</a><nav class="nav"><a href="/sen">Sen</a><a href="/energia">Energia</a><a href="/fundamenty">Fundamenty</a><a href="/faq">FAQ</a><a href="/kontakt">Kontakt</a></nav></div></header>
@@ -64,14 +70,39 @@
     <div class="card"><p class="highlight">Nie wrzucam 50 losowych linków.</p><ul class="list"><li>sensowny skład lub funkcja</li><li>zrozumiałe zastosowanie</li><li>realna przydatność</li><li>dobra relacja cena / wartość</li><li>prostota wdrożenia</li><li>sens zakupowy dla początkującego i średnio zaawansowanego użytkownika</li></ul></div>
   </section>
 
+  <section class="section">
+    <h2>Dzisiejsza porada</h2>
+    <div class="card">
+      <p id="daily-tip" class="highlight">—</p>
+      <div class="row"><button class="btn" id="btn-favorite-tip">⭐ Dodaj do ulubionych</button></div>
+    </div>
+  </section>
+
   <section class="section" id="quiz">
-    <h2>Quiz: co chcesz poprawić jako pierwsze?</h2>
+    <h2>Dzisiejszy quiz: Prawda czy fałsz?</h2>
+    <div class="card">
+      <p id="daily-quiz" class="highlight">—</p>
+      <div class="quiz-options"><button id="quiz-true">Prawda</button><button id="quiz-false">Fałsz</button></div>
+      <p class="small muted" id="quiz-feedback"></p>
+    </div>
+    <div class="spacer"></div>
+    <h2>Szybki quiz kierunkowy</h2>
     <div class="card"><div class="quiz-options"><button data-quiz-target="/sen">Sen</button><button data-quiz-target="/energia">Energia</button><button data-quiz-target="/energia">Stres</button><button data-quiz-target="/fundamenty">Fundamenty</button></div></div>
   </section>
 
   <section class="section">
     <h2>Darmowy mini‑przewodnik</h2>
-    <div class="card"><p>„3 gotowe stacki na sen, energię i regenerację”</p><form data-mail-form class="mail-box"><input type="email" placeholder="Twój e-mail" required/><button class="btn primary" type="submit">Wyślij mi przewodnik</button></form><p class="small muted" data-mail-msg></p></div>
+    <div class="card"><p>„3 gotowe stacki na sen, energię i regenerację”</p>
+      <form class="ml-block-form ml-inline" action="https://assets.mailerlite.com/jsonp/2202928/forms/182307396030301687/subscribe" method="post" target="ml-iframe">
+        <input aria-label="email" aria-required="true" type="email" class="form-control" name="fields[email]" placeholder="Twój e-mail" autocomplete="email" required>
+        <input type="hidden" name="ml-submit" value="1">
+        <input type="hidden" name="anticsrf" value="true">
+        <button class="btn primary" type="submit">Wyślij mi przewodnik</button>
+      </form>
+      <small class="note">Chcesz więcej takich rekomendacji</small>
+      <div class="ml-success" style="display:none">✅ Dzięki! Sprawdź skrzynkę mailową.</div>
+      <iframe name="ml-iframe" style="display:none"></iframe>
+    </div>
   </section>
 
   <section class="section faq">
