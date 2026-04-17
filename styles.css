@@ -1,0 +1,8 @@
+:root { color-scheme: dark; }
+* { box-sizing: border-box; }
+body { margin: 0; font-family: Inter, Segoe UI, Arial, sans-serif; background:#0b0f14; color:#e8edf2; }
+.wrap { max-width: 860px; margin: 0 auto; padding: 48px 20px; }
+h1 { font-size: clamp(2rem, 5vw, 3rem); margin: 0 0 8px; }
+.lead { opacity: .9; margin: 0 0 28px; }
+.card { background:#121922; border:1px solid #273246; border-radius: 16px; padding: 20px; }
+li { margin: 8px 0; }
