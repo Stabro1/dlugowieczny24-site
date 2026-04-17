@@ -1,9 +1,9 @@
 *{box-sizing:border-box}html,body{margin:0;padding:0}
 :root{
   --bg:#162032;
-  --surface:#F8FAFC;
+  --surface:#242924;
   --text:#E2E8F0;
-  --text-on-surface:#0F172A;
+  --text-on-surface:#E2E8F0;
   --cta:#008080;
   --accent:#38BDF8;
   --border:#D9E2EC;
