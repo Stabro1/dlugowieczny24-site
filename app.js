@@ -78,7 +78,7 @@ document.querySelectorAll('form.ml-block-form').forEach((f)=>{
 
 async function track(type){
   try{
-    await fetch(`https://statystykilp.vercel.app/api/track?site=pl&type=${type}`);
+    await fetch(`https://statystykilp.vercel.app/api/track?site=dl24&type=${type}`);
   }catch(e){}
 }
 
