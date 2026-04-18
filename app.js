@@ -75,3 +75,15 @@ document.querySelectorAll('form.ml-block-form').forEach((f)=>{
     if (ok) ok.style.display = 'block';
   });
 });
+
+async function track(type){
+  try{
+    await fetch(`https://statystykilp.vercel.app/api/track?site=pl&type=${type}`);
+  }catch(e){}
+}
+
+track('view');
+
+document.querySelectorAll('a[href^="http"]').forEach(a=>{
+  a.addEventListener('click', ()=>track('click'));
+});
