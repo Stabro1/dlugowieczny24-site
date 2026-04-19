@@ -118,29 +118,33 @@ const qfResultMap = {
   sen: {
     title: 'Największy problem jest teraz po stronie snu i regeneracji',
     desc: 'Twój wynik wskazuje, że właśnie ten obszar najbardziej wymaga poprawy. Zanim dołożysz kolejne rzeczy, warto najpierw poprawić wyciszenie, zasypianie i jakość regeneracji.',
-    rec: 'Najlepiej zacząć od: Dobry Sen',
-    cta: '/sen#najlepszy-wybor',
+    rec: 'Najlepiej zacząć od: Sen',
+    cta: '/sen',
+    ctaText: 'Przejdź do Sen',
     note: 'Jeśli sen siada, reszta zwykle też zaczyna się rozjeżdżać.'
   },
   energia: {
     title: 'Największy problem jest teraz po stronie energii i stabilności w ciągu dnia',
     desc: 'Twój wynik wskazuje, że najbardziej brakuje Ci stabilnej energii i lepszego paliwa na dzień. Najpierw warto poprawić ten obszar, zamiast opierać wszystko na kolejnej kawie.',
-    rec: 'Najlepiej zacząć od: Spokojna Energia',
-    cta: '/energia#najlepszy-wybor',
+    rec: 'Najlepiej zacząć od: Energia',
+    cta: '/energia',
+    ctaText: 'Przejdź do Energia',
     note: 'Celem nie jest mocniejszy strzał, tylko bardziej stabilny dzień.'
   },
   stres: {
     title: 'Największy problem jest teraz po stronie stresu i napięcia',
     desc: 'Twój wynik wskazuje, że najbardziej obciąża Cię napięcie i przeciążenie. Zanim skupisz się na kolejnych bodźcach, warto najpierw uspokoić ten obszar.',
-    rec: 'Najlepiej zacząć od sekcji: Stres',
-    cta: '#stres',
+    rec: 'Najlepiej zacząć od: Stres',
+    cta: '/stres',
+    ctaText: 'Przejdź do Stres',
     note: 'Czasem problemem nie jest brak energii, tylko zbyt duże obciążenie.'
   },
   fundamenty: {
     title: 'Największy problem jest teraz po stronie podstaw',
     desc: 'Twój wynik wskazuje, że najlepszy efekt da Ci uporządkowanie prostych fundamentów, zamiast dokładania wielu rzeczy naraz.',
-    rec: 'Najlepiej zacząć od: Codzienna Podstawa',
-    cta: '/fundamenty#najlepszy-wybor',
+    rec: 'Najlepiej zacząć od: Fundamenty',
+    cta: '/fundamenty',
+    ctaText: 'Przejdź do Fundamenty',
     note: 'Najpierw baza. Dopiero potem reszta.'
   }
 };
@@ -281,6 +285,7 @@ if (qf.showResultBtn){
     qf.rDesc.textContent = data.desc;
     qf.rRec.textContent = data.rec;
     qf.rCta.href = data.cta;
+    qf.rCta.textContent = data.ctaText;
     qf.rNote.textContent = data.note;
     qfShow('result');
   });
