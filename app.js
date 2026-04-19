@@ -55,6 +55,16 @@ async function track(type, target=''){
 track('view');
 document.querySelectorAll('a[href^="http"]').forEach(a=>a.addEventListener('click', ()=>track('click', a.href)));
 
+document.querySelectorAll('a[href="#quiz"]').forEach(a=>{
+  a.addEventListener('click', (e)=>{
+    e.preventDefault();
+    const el = document.getElementById('quiz');
+    if (!el) return;
+    const y = el.getBoundingClientRect().top + window.scrollY - 24;
+    window.scrollTo({ top: y, behavior: 'smooth' });
+  });
+});
+
 // Quiz kierunkowy (5 pytań + email gate)
 const qfQuestions = [
   {
