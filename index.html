@@ -27,7 +27,7 @@
     <div class="grid grid-2 problem-grid">
       <article class="card"><h3>Sen</h3><p class="muted">Jeśli trudno Ci się wyciszyć, zasnąć albo rano wstajesz bez regeneracji.</p><a class="btn" href="/sen">Przejdź do Sen</a></article>
       <article class="card"><h3>Energia</h3><p class="muted">Jeśli masz zjazdy w ciągu dnia i nie chcesz opierać wszystkiego na kolejnej kawie.</p><a class="btn" href="/energia">Przejdź do Energia</a></article>
-      <article class="card"><h3>Stres</h3><p class="muted">Jeśli napięcie i przeciążenie rozwalają Ci fokus oraz codzienne działanie.</p><a class="btn" href="/energia">Zobacz rozwiązania</a></article>
+      <article class="card" id="stres"><h3>Stres</h3><p class="muted">Jeśli napięcie i przeciążenie rozwalają Ci fokus oraz codzienne działanie.</p><a class="btn" href="/energia">Zobacz rozwiązania</a></article>
       <article class="card"><h3>Fundamenty</h3><p class="muted">Jeśli chcesz zacząć od prostych podstaw, zamiast gonić modne wynalazki.</p><a class="btn" href="/fundamenty">Przejdź do Fundamenty</a></article>
     </div>
   </section>
@@ -78,15 +78,37 @@
   </section>
 
   <section class="section" id="quiz">
-    <h2>Dzisiejszy quiz: Prawda czy fałsz?</h2>
-    <div class="card">
-      <p id="daily-quiz" class="highlight">—</p>
-      <div class="quiz-options"><button id="quiz-true">Prawda</button><button id="quiz-false">Fałsz</button></div>
-      <p class="small muted" id="quiz-feedback"></p>
+    <h2>Sprawdź, gdzie masz największy problem</h2>
+    <div class="card quiz-flow" id="qf-start">
+      <p class="muted">Wynik pokaże, który obszar najbardziej wymaga poprawy i od czego najlepiej zacząć.</p>
+      <button class="btn primary" id="qf-start-btn">Sprawdź mój wynik</button>
+      <p class="small muted">To zajmie mniej niż minutę.</p>
     </div>
-    <div class="spacer"></div>
-    <h2>Szybki quiz kierunkowy</h2>
-    <div class="card"><div class="quiz-options"><button data-quiz-target="/sen">Sen</button><button data-quiz-target="/energia">Energia</button><button data-quiz-target="/energia">Stres</button><button data-quiz-target="/fundamenty">Fundamenty</button></div></div>
+
+    <div class="card quiz-flow" id="qf-questions" style="display:none;">
+      <p class="small muted" id="qf-progress">1/5</p>
+      <h3 id="qf-question">—</h3>
+      <div class="quiz-options" id="qf-options"></div>
+    </div>
+
+    <div class="card quiz-flow" id="qf-email" style="display:none;">
+      <h3>Twój wynik jest gotowy</h3>
+      <p class="muted">Wpisz email, aby odblokować wynik i zobaczyć, od czego najlepiej zacząć.</p>
+      <div class="mail-box">
+        <input id="qf-email-input" type="email" placeholder="Twój adres email" />
+        <button class="btn primary" id="qf-show-result">Pokaż mój wynik</button>
+      </div>
+      <p class="small muted">Klikając, akceptujesz politykę prywatności.</p>
+      <p class="small" id="qf-email-error" style="display:none;color:#ef4444;">Podaj poprawny adres email.</p>
+    </div>
+
+    <div class="card quiz-flow" id="qf-result" style="display:none;">
+      <h3 id="qf-result-title">—</h3>
+      <p class="muted" id="qf-result-desc">—</p>
+      <p><b id="qf-result-rec">—</b></p>
+      <a class="btn primary" id="qf-result-cta" href="#">Zobacz rekomendację</a>
+      <p class="small muted" id="qf-result-note">—</p>
+    </div>
   </section>
 
   <section class="section">

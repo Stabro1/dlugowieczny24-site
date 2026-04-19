@@ -6,29 +6,7 @@ const pool = [
   { fact: 'Bez kofeiny przez 60–90 min po przebudzeniu.', quiz: 'Opóźnienie kofeiny zmniejsza popołudniowy spadek.', answer: true },
   { fact: 'Krótki spacer po posiłku (5–10 minut).', quiz: 'Spacer po posiłku wspiera kontrolę glukozy.', answer: true },
   { fact: 'Przyciemnianie ekranów 60 min przed snem.', quiz: 'Mniej niebieskiego światła wspiera melatoninę.', answer: true },
-  { fact: 'Stałe pory snu (ta sama godzina).', quiz: 'Regularność poprawia jakość snu.', answer: true },
-  { fact: '5 minut oddychania przez nos / box breathing.', quiz: 'Kontrolowany oddech obniża stres.', answer: true },
-  { fact: 'Krótka ekspozycja na zimno (twarz).', quiz: 'Zimno zwiększa czujność.', answer: true },
-  { fact: 'Mikro‑trening: 1–2 serie pompek/przysiadów.', quiz: 'Krótki trening też działa.', answer: true },
-  { fact: 'Ogranicz dodany cukier dziś.', quiz: 'Mniej cukru wspiera metabolizm.', answer: true },
-  { fact: 'Białko + błonnik na lunch.', quiz: 'Białko i błonnik stabilizują energię.', answer: true },
-  { fact: '7–10k kroków (rozłożone w ciągu dnia).', quiz: 'Ruch w ciągu dnia ma znaczenie.', answer: true },
-  { fact: '10 minut światła popołudniu.', quiz: 'Popołudniowe światło wzmacnia sygnały dobowe.', answer: true },
-  { fact: '2‑minutowy reset postawy (barki w dół).', quiz: 'Postawa wpływa na oddech i fokus.', answer: true },
-  { fact: '5 minut mobilności.', quiz: 'Mobilność zmniejsza sztywność.', answer: true },
-  { fact: 'Ostatni posiłek 2–3h przed snem.', quiz: 'Wcześniejsza kolacja poprawia sen.', answer: true },
-  { fact: 'Produkty bogate w magnez (zielone, orzechy).', quiz: 'Magnez wspiera relaks.', answer: true },
-  { fact: 'Ogranicz alkohol dziś.', quiz: 'Alkohol pogarsza jakość snu.', answer: true },
-  { fact: 'Jeden 25‑minutowy blok głębokiej pracy.', quiz: 'Krótki deep work buduje momentum.', answer: true },
-  { fact: '5 minut wdzięczności / journalingu.', quiz: 'Journaling obniża stres.', answer: true },
-  { fact: 'Rozciąganie łydek/bioder przez 3 min.', quiz: 'Rozciąganie poprawia mobilność.', answer: true },
-  { fact: 'Stań lub przejdź się podczas jednej rozmowy.', quiz: 'Stanie przerywa siedzenie.', answer: true },
-  { fact: 'Nawodnienie: 2 litry do wieczora.', quiz: 'Nawodnienie wspiera energię.', answer: true },
-  { fact: 'Bez telefonu przez 15 min po przebudzeniu.', quiz: 'Brak telefonu rano poprawia fokus.', answer: true },
-  { fact: 'Kofeina max 8h przed snem.', quiz: 'Późna kofeina psuje sen.', answer: true },
-  { fact: 'Dodaj omega‑3 dziś.', quiz: 'Omega‑3 wspiera mózg.', answer: true },
-  { fact: '10 minut rozciągania przed snem.', quiz: 'Rozciąganie pomaga w relaksie.', answer: true },
-  { fact: 'Krótki oddech po lunchu.', quiz: 'Oddech resetuje uwagę.', answer: true }
+  { fact: 'Stałe pory snu (ta sama godzina).', quiz: 'Regularność poprawia jakość snu.', answer: true }
 ];
 
 function hashDate(str){ let h = 0; for (let i=0;i<str.length;i++) h = (h*31 + str.charCodeAt(i)) >>> 0; return h; }
@@ -37,30 +15,10 @@ const idx = hashDate(todayKey) % pool.length;
 const today = pool[idx];
 
 const tipEl = document.getElementById('daily-tip');
-const quizEl = document.getElementById('daily-quiz');
-const feedbackEl = document.getElementById('quiz-feedback');
 if (tipEl) tipEl.textContent = today.fact;
-if (quizEl) quizEl.textContent = today.quiz;
-
-const btnTrue = document.getElementById('quiz-true');
-const btnFalse = document.getElementById('quiz-false');
-function answer(userAnswer){
-  if (!feedbackEl) return;
-  feedbackEl.textContent = userAnswer === today.answer ? '✅ Dobrze!' : '❌ Nie tym razem. Jutro nowe pytanie.';
-}
-if (btnTrue) btnTrue.addEventListener('click', ()=>answer(true));
-if (btnFalse) btnFalse.addEventListener('click', ()=>answer(false));
-
-document.querySelectorAll('[data-quiz-target]').forEach((btn)=>{
-  btn.addEventListener('click',()=>{
-    const target=btn.getAttribute('data-quiz-target');
-    if(target) window.location.href = target + '#najlepszy-wybor';
-  });
-});
-
-const state = JSON.parse(localStorage.getItem('dl24_state_pl') || '{"favorites":[]}');
 const favBtn = document.getElementById('btn-favorite-tip');
 if (favBtn){
+  const state = JSON.parse(localStorage.getItem('dl24_state_pl') || '{"favorites":[]}');
   favBtn.addEventListener('click', ()=>{
     if (!state.favorites.includes(today.fact)) state.favorites.unshift(today.fact);
     state.favorites = state.favorites.slice(0, 50);
@@ -69,6 +27,7 @@ if (favBtn){
   });
 }
 
+// MailerLite visual success
 document.querySelectorAll('form.ml-block-form').forEach((f)=>{
   f.addEventListener('submit', ()=>{
     const ok = f.parentElement.querySelector('.ml-success');
@@ -76,14 +35,206 @@ document.querySelectorAll('form.ml-block-form').forEach((f)=>{
   });
 });
 
-async function track(type){
+// Tracking
+const vidKey = 'dl24_vid';
+let vid = localStorage.getItem(vidKey);
+if (!vid) { vid = Math.random().toString(36).slice(2,10); localStorage.setItem(vidKey, vid); }
+
+async function track(type, target=''){
   try{
-    await fetch(`https://statystykilp.vercel.app/api/track?site=dl24&type=${type}`);
+    const url = new URL('https://statystykilp.vercel.app/api/track');
+    url.searchParams.set('site','dl24');
+    url.searchParams.set('type',type);
+    url.searchParams.set('path', location.pathname);
+    url.searchParams.set('ref', document.referrer || 'direct');
+    if (target) url.searchParams.set('target', target);
+    url.searchParams.set('vid', vid);
+    await fetch(url.toString());
   }catch(e){}
 }
-
 track('view');
+document.querySelectorAll('a[href^="http"]').forEach(a=>a.addEventListener('click', ()=>track('click', a.href)));
 
-document.querySelectorAll('a[href^="http"]').forEach(a=>{
-  a.addEventListener('click', ()=>track('click'));
-});
+// Quiz kierunkowy (5 pytań + email gate)
+const qfQuestions = [
+  {
+    q: 'Z czym masz teraz największy problem?',
+    a: [
+      {t:'Ze snem i regeneracją', p:{sen:3}},
+      {t:'Z energią i spadkami w ciągu dnia', p:{energia:3}},
+      {t:'Ze stresem i napięciem', p:{stres:3}},
+      {t:'Nie wiem, chcę po prostu sensownie zacząć', p:{fundamenty:3}},
+    ]
+  },
+  {
+    q: 'Jak najczęściej czujesz się rano?',
+    a: [
+      {t:'Niewyspany i bez regeneracji', p:{sen:2}},
+      {t:'Jest w miarę okej, ale szybko łapię zjazd', p:{energia:2}},
+      {t:'Budzę się spięty albo od razu w biegu', p:{stres:2}},
+      {t:'Różnie, trudno powiedzieć', p:{fundamenty:1}},
+    ]
+  },
+  {
+    q: 'Co najbardziej przeszkadza Ci w ciągu dnia?',
+    a: [
+      {t:'Słaba regeneracja i brak wyciszenia', p:{sen:2}},
+      {t:'Brak stabilnej energii i fokusu', p:{energia:2}},
+      {t:'Napięcie, chaos i przeciążenie', p:{stres:2}},
+      {t:'Brak prostego planu, od czego zacząć', p:{fundamenty:2}},
+    ]
+  },
+  {
+    q: 'Które zdanie najbardziej do Ciebie pasuje?',
+    a: [
+      {t:'Wieczorem trudno mi zwolnić', p:{sen:2}},
+      {t:'Ratuję się kawą albo szybkimi bodźcami', p:{energia:2}},
+      {t:'Nawet jak odpoczywam, głowa dalej pracuje', p:{stres:2}},
+      {t:'Chcę prostych podstaw bez kombinowania', p:{fundamenty:2}},
+    ]
+  },
+  {
+    q: 'Na czym zależy Ci najbardziej teraz?',
+    a: [
+      {t:'Lepszy sen i spokojniejszy poranek', p:{sen:3}},
+      {t:'Stabilniejsza energia bez zjazdów', p:{energia:3}},
+      {t:'Więcej spokoju i mniejsze napięcie', p:{stres:3}},
+      {t:'Rozsądny punkt startowy i proste podstawy', p:{fundamenty:3}},
+    ]
+  }
+];
+
+const qfResultMap = {
+  sen: {
+    title: 'Największy problem jest teraz po stronie snu i regeneracji',
+    desc: 'Twój wynik wskazuje, że właśnie ten obszar najbardziej wymaga poprawy. Zanim dołożysz kolejne rzeczy, warto najpierw poprawić wyciszenie, zasypianie i jakość regeneracji.',
+    rec: 'Najlepiej zacząć od: Dobry Sen',
+    cta: '/sen#najlepszy-wybor',
+    note: 'Jeśli sen siada, reszta zwykle też zaczyna się rozjeżdżać.'
+  },
+  energia: {
+    title: 'Największy problem jest teraz po stronie energii i stabilności w ciągu dnia',
+    desc: 'Twój wynik wskazuje, że najbardziej brakuje Ci stabilnej energii i lepszego paliwa na dzień. Najpierw warto poprawić ten obszar, zamiast opierać wszystko na kolejnej kawie.',
+    rec: 'Najlepiej zacząć od: Spokojna Energia',
+    cta: '/energia#najlepszy-wybor',
+    note: 'Celem nie jest mocniejszy strzał, tylko bardziej stabilny dzień.'
+  },
+  stres: {
+    title: 'Największy problem jest teraz po stronie stresu i napięcia',
+    desc: 'Twój wynik wskazuje, że najbardziej obciąża Cię napięcie i przeciążenie. Zanim skupisz się na kolejnych bodźcach, warto najpierw uspokoić ten obszar.',
+    rec: 'Najlepiej zacząć od sekcji: Stres',
+    cta: '#stres',
+    note: 'Czasem problemem nie jest brak energii, tylko zbyt duże obciążenie.'
+  },
+  fundamenty: {
+    title: 'Największy problem jest teraz po stronie podstaw',
+    desc: 'Twój wynik wskazuje, że najlepszy efekt da Ci uporządkowanie prostych fundamentów, zamiast dokładania wielu rzeczy naraz.',
+    rec: 'Najlepiej zacząć od: Codzienna Podstawa',
+    cta: '/fundamenty#najlepszy-wybor',
+    note: 'Najpierw baza. Dopiero potem reszta.'
+  }
+};
+
+const qf = {
+  start: document.getElementById('qf-start'),
+  questions: document.getElementById('qf-questions'),
+  email: document.getElementById('qf-email'),
+  result: document.getElementById('qf-result'),
+  startBtn: document.getElementById('qf-start-btn'),
+  progress: document.getElementById('qf-progress'),
+  question: document.getElementById('qf-question'),
+  options: document.getElementById('qf-options'),
+  emailInput: document.getElementById('qf-email-input'),
+  emailError: document.getElementById('qf-email-error'),
+  showResultBtn: document.getElementById('qf-show-result'),
+  rTitle: document.getElementById('qf-result-title'),
+  rDesc: document.getElementById('qf-result-desc'),
+  rRec: document.getElementById('qf-result-rec'),
+  rCta: document.getElementById('qf-result-cta'),
+  rNote: document.getElementById('qf-result-note')
+};
+
+let qfIndex = 0;
+let qfScores = { sen:0, energia:0, stres:0, fundamenty:0 };
+
+function qfShow(step){
+  if (!qf.start) return;
+  qf.start.style.display = step==='start' ? '' : 'none';
+  qf.questions.style.display = step==='questions' ? '' : 'none';
+  qf.email.style.display = step==='email' ? '' : 'none';
+  qf.result.style.display = step==='result' ? '' : 'none';
+}
+
+function qfRenderQuestion(){
+  const q = qfQuestions[qfIndex];
+  if (!q) return;
+  qf.progress.textContent = `${qfIndex+1}/5`;
+  qf.question.textContent = q.q;
+  qf.options.innerHTML = '';
+  q.a.forEach((opt)=>{
+    const btn = document.createElement('button');
+    btn.textContent = opt.t;
+    btn.type = 'button';
+    btn.addEventListener('click', ()=>{
+      Object.entries(opt.p).forEach(([k,v])=> qfScores[k] += v);
+      qfIndex += 1;
+      if (qfIndex >= qfQuestions.length) qfShow('email');
+      else qfRenderQuestion();
+    });
+    qf.options.appendChild(btn);
+  });
+}
+
+function qfWinner(){
+  const order = ['sen','energia','stres','fundamenty'];
+  return order.reduce((best, key)=> qfScores[key] > qfScores[best] ? key : best, order[0]);
+}
+
+async function qfSaveLead(email, winner){
+  const item = { email, winner, ts: new Date().toISOString() };
+  const arr = JSON.parse(localStorage.getItem('dl24_quiz_leads') || '[]');
+  arr.unshift(item);
+  localStorage.setItem('dl24_quiz_leads', JSON.stringify(arr.slice(0,200)));
+
+  // Placeholder hook for backend lead capture:
+  // Set window.DL24_QUIZ_LEAD_ENDPOINT = 'https://your-endpoint'
+  const endpoint = window.DL24_QUIZ_LEAD_ENDPOINT || '';
+  if (endpoint) {
+    try {
+      await fetch(endpoint, {
+        method: 'POST',
+        headers: { 'Content-Type':'application/json' },
+        body: JSON.stringify(item)
+      });
+    } catch (e) {}
+  }
+}
+
+if (qf.startBtn){
+  qf.startBtn.addEventListener('click', ()=>{
+    qfIndex = 0;
+    qfScores = { sen:0, energia:0, stres:0, fundamenty:0 };
+    qfShow('questions');
+    qfRenderQuestion();
+  });
+}
+
+if (qf.showResultBtn){
+  qf.showResultBtn.addEventListener('click', async ()=>{
+    const email = (qf.emailInput.value || '').trim();
+    if (!/^\S+@\S+\.\S+$/.test(email)) {
+      qf.emailError.style.display = '';
+      return;
+    }
+    qf.emailError.style.display = 'none';
+    const win = qfWinner();
+    await qfSaveLead(email, win);
+    const data = qfResultMap[win];
+    qf.rTitle.textContent = data.title;
+    qf.rDesc.textContent = data.desc;
+    qf.rRec.textContent = data.rec;
+    qf.rCta.href = data.cta;
+    qf.rNote.textContent = data.note;
+    qfShow('result');
+  });
+}
