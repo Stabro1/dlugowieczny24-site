@@ -196,7 +196,44 @@ async function qfSaveLead(email, winner){
   arr.unshift(item);
   localStorage.setItem('dl24_quiz_leads', JSON.stringify(arr.slice(0,200)));
 
-  // Placeholder hook for backend lead capture:
+  // MailerLite (ten sam endpoint co główny formularz)
+  try {
+    const iframeName = 'ml-iframe-quiz';
+    let iframe = document.querySelector(`iframe[name="${iframeName}"]`);
+    if (!iframe) {
+      iframe = document.createElement('iframe');
+      iframe.name = iframeName;
+      iframe.style.display = 'none';
+      document.body.appendChild(iframe);
+    }
+
+    const form = document.createElement('form');
+    form.method = 'post';
+    form.action = 'https://assets.mailerlite.com/jsonp/2202928/forms/182307396030301687/subscribe';
+    form.target = iframeName;
+    form.style.display = 'none';
+
+    const fEmail = document.createElement('input');
+    fEmail.name = 'fields[email]';
+    fEmail.value = email;
+    form.appendChild(fEmail);
+
+    const fSubmit = document.createElement('input');
+    fSubmit.name = 'ml-submit';
+    fSubmit.value = '1';
+    form.appendChild(fSubmit);
+
+    const fCsrf = document.createElement('input');
+    fCsrf.name = 'anticsrf';
+    fCsrf.value = 'true';
+    form.appendChild(fCsrf);
+
+    document.body.appendChild(form);
+    form.submit();
+    setTimeout(()=>form.remove(), 1500);
+  } catch(e) {}
+
+  // Opcjonalny dodatkowy webhook
   // Set window.DL24_QUIZ_LEAD_ENDPOINT = 'https://your-endpoint'
   const endpoint = window.DL24_QUIZ_LEAD_ENDPOINT || '';
   if (endpoint) {
