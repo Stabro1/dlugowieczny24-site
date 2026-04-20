@@ -1,5 +1,13 @@
 {
-  "cleanUrls": true,
+  "rewrites": [
+    { "source": "/sen", "destination": "/sen.html" },
+    { "source": "/energia", "destination": "/energia.html" },
+    { "source": "/fundamenty", "destination": "/fundamenty.html" },
+    { "source": "/stres", "destination": "/stres.html" },
+    { "source": "/faq", "destination": "/faq.html" },
+    { "source": "/kontakt", "destination": "/kontakt.html" },
+    { "source": "/polityka-prywatnosci", "destination": "/polityka-prywatnosci.html" }
+  ],
   "redirects": [
     {
       "source": "/(.*)",
