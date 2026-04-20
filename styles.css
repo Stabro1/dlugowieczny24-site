@@ -13,7 +13,8 @@ a{color:var(--accent)}
 .container{max-width:900px;margin:0 auto;padding:0 16px}
 .topbar{position:sticky;top:0;background:rgba(22,32,50,.95);border-bottom:1px solid #243247;z-index:30}
 .topbar .container{display:flex;flex-direction:row;justify-content:center;align-items:center;padding:10px 16px 12px;gap:14px;flex-wrap:wrap}
-.logo{font-weight:900;text-decoration:none;color:var(--text);text-align:center}
+.logo{font-weight:900;text-decoration:none;color:var(--text);text-align:center;display:inline-flex;align-items:center;gap:8px}
+.logo-img{width:28px;height:28px;border-radius:50%;object-fit:cover;border:1px solid rgba(255,255,255,.25)}
 .nav{display:flex;gap:14px;flex-wrap:wrap;justify-content:center}
 .nav a{text-decoration:none;color:var(--accent);font-weight:700}
 .hero{padding:34px 0 18px;text-align:center}
