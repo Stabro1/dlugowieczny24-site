@@ -60,7 +60,7 @@
 
   <section class="section">
     <h2>Wyróżniona promocja</h2>
-    <article class="card">
+    <article class="card promo-card" data-category="zdrowie">
       <span class="pill">Kod promocyjny</span>
       <h3>Polskie Centrum Kolagenu — zestaw próbek kremów</h3>
       <p class="small"><b>Kod:</b> Zestaw57</p>
@@ -72,20 +72,20 @@
   <section class="section">
     <h2>Więcej promocji</h2>
     <div class="grid grid-2">
-      <article class="card">
+      <article class="card promo-card" data-category="zdrowie">
         <span class="pill">Zdrowie i wellness</span>
         <h3>Pierwsza konsultacja 20% taniej</h3>
         <p class="small"><b>Kod rabatowy:</b> MD20</p>
         <p class="small">Pierwsza konsultacja na dowolną usługę 20% taniej. Oferta ważna do końca roku.</p>
         <a class="btn primary" href="https://webep1.com/c/13590/69be5d0be81239fbf6b84204?r=aHR0cHM6Ly9tb2pkb2t0b3IucGwv" target="_blank" rel="nofollow sponsored noopener">Sprawdź promocję</a>
       </article>
-      <article class="card">
+      <article class="card promo-card" data-category="zdrowie">
         <span class="pill">Energia i suplementy</span>
         <h3>Witamina C — linia Bionic</h3>
         <p class="small">Moc witaminy C zamknięta w kapsułkach. Zyskaj dodatkowe 40% rabatu na linię Bionic.</p>
         <a class="btn primary" href="https://webep1.com/c/13212/69be5d0be81239fbf6b84204?r=aHR0cHM6Ly90b2xwYS5wbC9iaW9uaWMuaHRtbA" target="_blank" rel="nofollow sponsored noopener">Sprawdź promocję</a>
       </article>
-      <article class="card">
+      <article class="card promo-card" data-category="energia">
         <span class="pill">Zdrowie i wellness</span>
         <h3>Glowmania — rabaty na produkty pielęgnacyjne</h3>
         <p class="small"><b>Promocja:</b> 3 produkty — 30% rabatu, 4 produkty — 40% rabatu, 5 lub więcej produktów — 50% rabatu oraz prezent za 1 gr.</p>
@@ -103,7 +103,8 @@
   let offers = [];
   const esc = v => String(v ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
   const cat = o => { const s = [o.categoryName,o.programName,o.voucherName,o.voucherText].join(' ').toLowerCase(); if (/sen|sleep|regener|relaks/.test(s)) return 'sen'; if (/energi|suplement|witamin|zdrow|health|kosmet/.test(s)) return 'energia'; if (/fitness|sport|biegan|siłow|aktyw/.test(s)) return 'fitness'; return null; };
-  const render = selected => { const rows = offers.filter(o => selected === 'all' ? cat(o) : cat(o) === selected); list.innerHTML = rows.length ? rows.map(o => `<article class="card"><span class="pill">${esc(o.categoryName || 'Zdrowie')}</span><h3>${esc(o.voucherName || o.programName || 'Promocja zdrowotna')}</h3><p class="small">${esc(o.voucherText || 'Sprawdź warunki i termin oferty.')}</p>${o.voucherCode ? `<p class="small"><b>Kod:</b> ${esc(o.voucherCode)}</p>` : ''}${o.voucherTrackingUrl ? `<a class="btn primary" href="${esc(o.voucherTrackingUrl)}" target="_blank" rel="nofollow noopener">Sprawdź promocję</a>` : ''}</article>`).join('') : '<p class="small">Brak aktywnych promocji w tej kategorii.</p>'; };
+  const manual = [...document.querySelectorAll('.promo-card')];
+  const render = selected => { const rows = offers.filter(o => selected === 'all' ? cat(o) : cat(o) === selected); manual.forEach(card => { card.style.display = selected === 'all' || card.dataset.category === selected ? '' : 'none'; }); list.innerHTML = rows.length ? rows.map(o => `<article class="card promo-card" data-category="${esc(cat(o))}"><span class="pill">${esc(o.categoryName || 'Zdrowie')}</span><h3>${esc(o.voucherName || o.programName || 'Promocja zdrowotna')}</h3><p class="small">${esc(o.voucherText || 'Sprawdź warunki i termin oferty.')}</p>${o.voucherCode ? `<p class="small"><b>Kod:</b> ${esc(o.voucherCode)}</p>` : ''}${o.voucherTrackingUrl ? `<a class="btn primary" href="${esc(o.voucherTrackingUrl)}" target="_blank" rel="nofollow noopener">Sprawdź promocję</a>` : ''}</article>`).join('') : ''; };
   filters.addEventListener('click', e => { const b = e.target.closest('[data-cat]'); if (b) render(b.dataset.cat); });
   fetch('/api/webe').then(r => r.ok ? r.json() : []).then(data => { offers = Array.isArray(data) ? data.filter(o => cat(o)) : []; render('all'); }).catch(() => { list.innerHTML = '<p class="small">Promocje są chwilowo niedostępne.</p>'; });
 })();
